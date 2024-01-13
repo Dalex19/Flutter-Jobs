@@ -22,7 +22,7 @@ class Toolbar extends StatelessWidget {
           style: TextStyle(
             fontSize: 18,
             //foregroundColor: Colors.black12
-            color: Colors.black.withOpacity(0.6)
+            color: Colors.black
           ),
         )
       ],

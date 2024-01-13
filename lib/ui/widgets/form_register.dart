@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_jobs/ui/widgets/custom_button.dart';
 import 'package:flutter_jobs/ui/widgets/info_button.dart';
 import 'package:flutter_jobs/ui/widgets/password_field.dart';
+import 'package:go_router/go_router.dart';
 
 class FormRegister extends StatefulWidget {
   const FormRegister({super.key});
@@ -80,7 +81,7 @@ class FormRegisterState extends State<FormRegister> {
                 },
                 colorText: Colors.white,
               ),
-              InfoButton("Already have an account?", "Log in here", () => print("hi"))
+              InfoButton("Already have an account?", "Log in here", () => context.go("/login"))
             ],
           ),
         ));

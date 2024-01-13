@@ -57,9 +57,7 @@ class HomeScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  CustomButton("Get Started", Colors.white, () {
-                    print("iam get Started");
-                  }),
+                  CustomButton("Get Started", Colors.white, () => context.go("/login")),
                   CustomButton("Register", Colors.yellow, () => context.go("/register"))
                 ],
               ),
