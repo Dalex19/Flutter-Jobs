@@ -1,5 +1,9 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_jobs/constants/routes_constants.dart';
+import 'package:flutter_jobs/helpers/snackbar_helper.dart';
+import 'package:flutter_jobs/services/user.dart';
+import 'package:flutter_jobs/ui/styles/form_field_styles.dart';
 import 'package:flutter_jobs/ui/widgets/custom_button.dart';
 import 'package:flutter_jobs/ui/widgets/info_button.dart';
 import 'package:flutter_jobs/ui/widgets/password_field.dart';
@@ -16,9 +20,15 @@ class FormLogin extends StatefulWidget {
 
 class FormLoginState extends State<FormLogin> {
   final _formKey = GlobalKey<FormState>();
+  bool isConnectd = false;
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  void cleanForm() {
+    emailController.clear();
+    passwordController.clear();
+  }
 
   @override
   Widget build (BuildContext context) {
@@ -30,12 +40,7 @@ class FormLoginState extends State<FormLogin> {
           TextFormField(
             controller: emailController,
             keyboardType: TextInputType.emailAddress,
-            decoration: const InputDecoration(
-              prefixIcon: Icon(Icons.email),
-              labelText: "Email",
-              enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(width: 2, color: Colors.black26),
-                    )),
+            decoration: FormFieldStyles.textFormFieldDecoration(labelText: "Email", prefixIcon: Icons.email),
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return "Please enter some text";
@@ -45,17 +50,19 @@ class FormLoginState extends State<FormLogin> {
           ),
           const SizedBox(height: 15),
           PasswordField(passwordController),
-          InfoButton("Have you forgotten your password?", "Forgot Password", () { }),
-          CustomButton("Log in", const Color(0xFF253D57),  () {
-            if (_formKey.currentState!.validate()) {
-                    Map<String, String> data = {
-                      "email": emailController.text,
-                      "password": passwordController.text
-                    };
-                    print(data);
-                  }
-           }, colorText: Colors.white),
-          Center(child: InfoButton("Dont have an account yet?", "Register Here", () => context.go("/register")),)
+          InfoButton("Have you forgotten your password?", "Forgot Password", () => context.go("/test")),
+          CustomButton("Log in", const Color(0xFF253D57), () {
+          if (_formKey.currentState!.validate()) {
+            try {
+              UserList.loginUser(emailController.text);
+              context.go(RoutesConstants.home);
+            } catch (e) {
+              final snackBar = SnackBarHelper.buildErroSnackBar(context, "Error in login", cleanForm);
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            }
+          }
+        }, colorText: Colors.white),
+          Center(child: InfoButton("Dont have an account yet?", "Register Here", () => context.go(RoutesConstants.register))),
         ]),
       
     );

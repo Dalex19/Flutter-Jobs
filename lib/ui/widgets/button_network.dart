@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ButtonNetwork extends StatelessWidget {
-  String _nameIcon;
-  VoidCallback _doSession;
+  final String _nameIcon;
+  final VoidCallback _doSession;
 
-  ButtonNetwork(this._nameIcon, this._doSession);
+  const ButtonNetwork(this._nameIcon, this._doSession, {super.key});
 
   @override
   Widget build (BuildContext context) {

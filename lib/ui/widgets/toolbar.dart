@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class Toolbar extends StatelessWidget {
   final String _title, _description;
 
-  Toolbar(this._title, this._description);
+  const Toolbar(this._title, this._description, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,11 +17,10 @@ class Toolbar extends StatelessWidget {
             fontWeight: FontWeight.bold
           )
         ),
-        SizedBox(height: 5),
+        const SizedBox(height: 5),
         Text(_description,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 18,
-            //foregroundColor: Colors.black12
             color: Colors.black
           ),
         )

@@ -4,7 +4,7 @@ class InfoButton extends StatelessWidget {
  final String _primaryText, _secondText;
   final VoidCallback _redirect;
 
-  const InfoButton(this._primaryText, this._secondText, this._redirect);
+  const InfoButton(this._primaryText, this._secondText, this._redirect, {super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -21,11 +21,11 @@ class RegisterScreen extends StatelessWidget {
               SvgPicture.asset("assets/registerIcon.svg",
                   width: MediaQuery.of(context).size.width * 0.9),
               const SizedBox(height: 8),
-              Toolbar("Register", "Before you start, register yourself with us")
+              const Toolbar("Register", "Before you start, register yourself with us")
             ]),
           ),
         ),
-        FormRegister()
+        const FormRegister()
       ]),
     )));
   }

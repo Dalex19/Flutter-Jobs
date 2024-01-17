@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_jobs/constants/routes_constants.dart';
+import 'package:flutter_jobs/helpers/snackbar_helper.dart';
+import 'package:flutter_jobs/ui/styles/form_field_styles.dart';
+import 'package:go_router/go_router.dart';
+
+import 'package:flutter_jobs/services/user.dart';
 import 'package:flutter_jobs/ui/widgets/custom_button.dart';
 import 'package:flutter_jobs/ui/widgets/info_button.dart';
 import 'package:flutter_jobs/ui/widgets/password_field.dart';
-import 'package:go_router/go_router.dart';
 
 class FormRegister extends StatefulWidget {
   const FormRegister({super.key});
@@ -20,8 +25,15 @@ class FormRegisterState extends State<FormRegister> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  void cleanForm() {
+    fullnameController.clear();
+    emailController.clear();
+    passwordController.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
+
     return Form(
         key: _formKey,
         child: Container(
@@ -32,12 +44,7 @@ class FormRegisterState extends State<FormRegister> {
               TextFormField(
                 controller: fullnameController,
                 keyboardType: TextInputType.text,
-                decoration: const InputDecoration(
-                    prefixIcon: Icon(Icons.person),
-                    labelText: "Full Name",
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(width: 2, color: Colors.black26),
-                    )),
+                decoration: FormFieldStyles.textFormFieldDecoration(labelText: "Full Name", prefixIcon: Icons.person),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter some text';
@@ -45,16 +52,11 @@ class FormRegisterState extends State<FormRegister> {
                   return null;
                 },
               ),
-              SizedBox(height: 15),
+              const SizedBox(height: 15),
               TextFormField(
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
-                decoration: const InputDecoration(
-                    prefixIcon: Icon(Icons.email),
-                    labelText: "Email",
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(width: 2, color: Colors.black26),
-                    )),
+                decoration: FormFieldStyles.textFormFieldDecoration(labelText: "Email", prefixIcon: Icons.email),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter some text';
@@ -62,26 +64,28 @@ class FormRegisterState extends State<FormRegister> {
                   return null;
                 },
               ),
-              SizedBox(height: 15),
+              const SizedBox(height: 15),
               PasswordField(passwordController),
-              SizedBox(height: 15),
+              const SizedBox(height: 15),
               CustomButton(
                 "Register",
-                Color(0xFF253D57),
+                const Color(0xFF253D57),
                 () {
-                   
+
                   if (_formKey.currentState!.validate()) {
-                    Map<String, String> data = {
-                      "name" : fullnameController.text,
-                      "email": emailController.text,
-                      "password": passwordController.text
-                    };
-                    print(data);
+                   try {
+                    User newUser = User(fullnameController.text, emailController.text, passwordController.text);
+                    UserList.registerUser(newUser);
+                    context.go(RoutesConstants.home);
+                   } catch (e) {
+                    final snackBar = SnackBarHelper.buildErroSnackBar(context, "Error in register", cleanForm);
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                   }
                   }
                 },
                 colorText: Colors.white,
               ),
-              InfoButton("Already have an account?", "Log in here", () => context.go("/login"))
+              InfoButton("Already have an account?", "Log in here", () => context.go(RoutesConstants.login)),
             ],
           ),
         ));

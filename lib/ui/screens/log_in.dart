@@ -24,7 +24,7 @@ class LogIn extends StatelessWidget {
                   width: MediaQuery.of(context).size.width * 0.8,
                 ),
                 const SizedBox(height: 12),
-                Toolbar("Login", "Login to access many jobs"),
+                const Toolbar("Login", "Login to access many jobs"),
                 const SizedBox(height: 12),
                 Row(
                   children: [
@@ -35,7 +35,7 @@ class LogIn extends StatelessWidget {
                     ButtonNetwork("assets/googleIcon.svg", () {})
                   ],
                 ),
-                SizedBox(height: 18)
+               const SizedBox(height: 18)
               ],
             ),
              Column(
@@ -44,7 +44,7 @@ class LogIn extends StatelessWidget {
                   "Or login using your email adress",
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
                 ),
-                const SizedBox(height: 18,),
+                SizedBox(height: 18,),
                 FormLogin()
               ],
             ),
