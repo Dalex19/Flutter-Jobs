@@ -1,3 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+
 class User {
   static int idIncrement = 0;
  final String _fullName, _email, password;
@@ -33,5 +36,18 @@ class UserList {
   }
 
   static void showAllUsers () => allUsers.forEach(print);
+
+}
+
+class UserServices {
+
+  static void registerUserFB (String email, password) async {
+    try {
+      final credentials = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+      print(credentials);
+    } catch (e) {
+      throw Exception("Error in firebase ${e}");
+    }
+  }
 
 }

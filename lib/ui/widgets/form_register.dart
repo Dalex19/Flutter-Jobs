@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_jobs/constants/routes_constants.dart';
 import 'package:flutter_jobs/helpers/snackbar_helper.dart';
@@ -74,8 +75,7 @@ class FormRegisterState extends State<FormRegister> {
 
                   if (_formKey.currentState!.validate()) {
                    try {
-                    User newUser = User(fullnameController.text, emailController.text, passwordController.text);
-                    UserList.registerUser(newUser);
+                    UserServices.registerUserFB(emailController.text, passwordController.text);
                     context.go(RoutesConstants.home);
                    } catch (e) {
                     final snackBar = SnackBarHelper.buildErroSnackBar(context, "Error in register", cleanForm);
