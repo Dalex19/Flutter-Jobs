@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_jobs/constants/routes_constants.dart';
 import 'package:flutter_jobs/helpers/snackbar_helper.dart';
@@ -72,15 +71,14 @@ class FormRegisterState extends State<FormRegister> {
                 "Register",
                 const Color(0xFF253D57),
                 () {
-
                   if (_formKey.currentState!.validate()) {
-                   try {
-                    UserServices.registerUserFB(emailController.text, passwordController.text);
-                    context.go(RoutesConstants.home);
-                   } catch (e) {
-                    final snackBar = SnackBarHelper.buildErroSnackBar(context, "Error in register", cleanForm);
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                   }
+                    UserServices.registerUserFB(emailController.text, passwordController.text)
+                    .then((value) {context.go(RoutesConstants.home);})
+                    .catchError((onError) {
+                        final snackBar = SnackBarHelper.buildErroSnackBar(
+                          context, "Error in register", cleanForm);
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    });
                   }
                 },
                 colorText: Colors.white,

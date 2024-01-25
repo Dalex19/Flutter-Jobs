@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">flutter-jobs</string>
+    <string name="facebook_app_id">895106295395309</string>
+    <string name="fb_login_protocol_scheme">fb895106295395309</string>
+    <string name="facebook_client_token">8b776ea7ffffda4e711d2cb098cfffb5</string>
+</resources>

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_jobs/constants/routes_constants.dart';
+import 'package:flutter_jobs/helpers/snackbar_helper.dart';
+import 'package:flutter_jobs/services/user.dart';
 import 'package:flutter_jobs/ui/widgets/button_network.dart';
 import 'package:flutter_jobs/ui/widgets/form_login.dart';
 import 'package:flutter_jobs/ui/widgets/toolbar.dart';
+import 'package:go_router/go_router.dart';
 
 class LogIn extends StatelessWidget {
   const LogIn({super.key});
@@ -28,7 +32,14 @@ class LogIn extends StatelessWidget {
                 const SizedBox(height: 12),
                 Row(
                   children: [
-                    ButtonNetwork("assets/facebookIcon.svg", () {}),
+                    ButtonNetwork("assets/facebookIcon.svg", () {
+                        UserServices.signInWithFacebook()
+                        .then((value) {context.go(RoutesConstants.home);})
+                        .catchError((onError) {
+                          final snackBar = SnackBarHelper.buildErroSnackBar(context, "Error, operation cancel", () { });
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        });
+                    }),
                     const SizedBox(width: 10),
                     ButtonNetwork("assets/appleIcon.svg", () {}),
                     const SizedBox(width: 10),

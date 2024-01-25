@@ -1,10 +1,13 @@
+
 import 'package:flutter/material.dart';
+import 'package:flutter_jobs/constants/routes_constants.dart';
 import 'package:flutter_jobs/ui/widgets/custom_button.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -57,8 +60,8 @@ class WelcomeScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  CustomButton("Get Started", Colors.white, () => context.go("/login")),
-                  CustomButton("Register", Colors.yellow, () => context.go("/register"))
+                  CustomButton("Get Started", Colors.white, () => context.go(RoutesConstants.login)),
+                  CustomButton("Register", Colors.yellow, () => context.go(RoutesConstants.register))
                 ],
               ),
             )

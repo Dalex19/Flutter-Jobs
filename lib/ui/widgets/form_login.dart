@@ -52,15 +52,17 @@ class FormLoginState extends State<FormLogin> {
           PasswordField(passwordController),
           InfoButton("Have you forgotten your password?", "Forgot Password", () => context.go("/test")),
           CustomButton("Log in", const Color(0xFF253D57), () {
+
           if (_formKey.currentState!.validate()) {
-            try {
-              UserList.loginUser(emailController.text);
-              context.go(RoutesConstants.home);
-            } catch (e) {
-              final snackBar = SnackBarHelper.buildErroSnackBar(context, "Error in login", cleanForm);
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            }
+            UserServices.loginUser(emailController.text, passwordController.text)
+                .then((value) {context.go(RoutesConstants.home);})
+                .catchError((onError) {
+                  final snackBar = SnackBarHelper.buildErroSnackBar(
+                    context, "Error in login $onError", cleanForm);
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            });
           }
+
         }, colorText: Colors.white),
           Center(child: InfoButton("Dont have an account yet?", "Register Here", () => context.go(RoutesConstants.register))),
         ]),
